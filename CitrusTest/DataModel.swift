@@ -33,7 +33,7 @@ struct Upvote: Codable {
 }
 
 struct User: Codable {
-    let id: ID
+    let id: String
     let name: Name
     
     enum CodingKeys: String, CodingKey {
@@ -42,51 +42,24 @@ struct User: Codable {
     }
 }
 
-enum ID: String, Codable {
-    case the587288F6E6F85E64Ae1C7Ef7 = "587288f6e6f85e64ae1c7ef7"
-    case the5887E9F65C873E001103688D = "5887e9f65c873e001103688d"
-    case the588E6E8806Ac2B00110E59C3 = "588e6e8806ac2b00110e59c3"
-    case the58C86Fe52341Fc0011D7B151 = "58c86fe52341fc0011d7b151"
-    case the58E007480Aac31001185Ecef = "58e007480aac31001185ecef"
-    case the58F89C8D11658E00113Ddd24 = "58f89c8d11658e00113ddd24"
-    case the590C74045363E000200D5140 = "590c74045363e000200d5140"
-    case the595579027B77520020799430 = "595579027b77520020799430"
-    case the596Ea14Ed4D9720020401F7B = "596ea14ed4d9720020401f7b"
-    case the5A9Ac18C7478810Ea6C06381 = "5a9ac18c7478810ea6c06381"
-    case the5C3Ce169A67A5A00140E2C93 = "5c3ce169a67a5a00140e2c93"
-    case the5C406Ae7477C990014F1E0B4 = "5c406ae7477c990014f1e0b4"
-}
-
 struct Name: Codable {
     let first: First
-    let last: Last
+    let last: String
 }
 
 enum First: String, Codable {
     case alex = "Alex"
+    case beth = "Beth"
+    case david = "David"
     case hampton = "Hampton"
+    case hay = "Hay"
     case isItStillMemesThat = "Is It Still Memes That"
     case jackson = "Jackson"
     case kasimir = "Kasimir"
     case kenny = "Kenny"
     case malvika = "Malvika"
-    case silvester = "Silvester"
     case thomas = "Thomas"
-    case рустем = "Рустем"
-}
-
-enum Last: String, Codable {
-    case corsig = "Corsig"
-    case lockwood = "Lockwood"
-    case makeYouSweat = "Make You Sweat?"
-    case mcGrath = "McGrath"
-    case schneider = "Schneider"
-    case schulz = "Schulz"
-    case simon = "Simon"
-    case sippe = "Sippe"
-    case tewari = "Tewari"
-    case wohlbruck = "Wohlbruck"
-    case султанов = "Султанов"
+    case кошечка = "Кошечка"
 }
 
 // MARK: Encode/decode helpers

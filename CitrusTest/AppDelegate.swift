@@ -15,11 +15,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        
+        //Changing initial View Controller
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         
-        if defaults.bool(forKey: "userIsRegistered") {
-            if defaults.bool(forKey: "userIsLoggedIn") {
+        if global.defaults.bool(forKey: "userIsRegistered") {
+            if global.defaults.bool(forKey: "userIsLoggedIn") {
                 let firstViewController = storyboard.instantiateViewController(withIdentifier: "NVC")
                 self.window?.rootViewController = firstViewController
                 self.window?.makeKeyAndVisible()

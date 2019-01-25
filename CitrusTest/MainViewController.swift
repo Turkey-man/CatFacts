@@ -9,17 +9,16 @@
 import UIKit
 import Alamofire
 
-class MainViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+public class MainViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     @IBOutlet weak var tableView: UITableView!
     
     var logoutButton = UIButton()
-    let loginViewController = LoginViewController()
     var textArray = [All]()
  
-    override func viewDidLoad() {
+    override public func viewDidLoad() {
         super.viewDidLoad()
-     
+        //Getting data and parsing received JSON
         request("https://cat-fact.herokuapp.com/facts").responseData { response in
             let json = response.data
             do {
@@ -27,49 +26,51 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 self.textArray = (data?.all)!
             } catch
                 let error {
-            print(error)
+                print(error)
             }
                     self.tableView.reloadData()
                     }
         
-        setLogoutButton()
-
-        navigationItem.hidesBackButton = true
+        self.setLogoutButton()
+        self.navigationController?.navigationBar.isHidden = false
+        self.navigationItem.hidesBackButton = true
         self.tableView.register(UINib(nibName: "TableViewCell", bundle: nil), forCellReuseIdentifier: "custom")
     }
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return textArray.count
+    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return self.textArray.count
 
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: TableViewCell = self.tableView.dequeueReusableCell(withIdentifier: "custom") as! TableViewCell
         
-        if let firstName = textArray[indexPath.row].user?.name.first {
-            if let lastName = textArray[indexPath.row].user?.name.last {
+        if let firstName = self.textArray[indexPath.row].user?.name.first {
+            if let lastName = self.textArray[indexPath.row].user?.name.last {
                 let fullName = "\(firstName) \(lastName)"
                 cell.nameLabel.text = fullName.capitalized
             }
         }
-        cell.factTextView.text = textArray[indexPath.row].text
+        cell.factTextView.text = self.textArray[indexPath.row].text
         return cell
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        tableView.estimatedRowHeight = 100
-        tableView.rowHeight = UITableViewAutomaticDimension
+    override public func viewWillAppear(_ animated: Bool) {
+        self.tableView.estimatedRowHeight = 100
+        self.tableView.rowHeight = UITableViewAutomaticDimension
     }
     
-    func setLogoutButton() {
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Logout", style: .plain, target: self, action: #selector(logout))
-        navigationItem.rightBarButtonItem?.tintColor = UIColor.black
-        navigationItem.rightBarButtonItem?.isEnabled = true
+    private func setLogoutButton() {
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Logout",
+                                                                 style: .plain,
+                                                                 target: self,
+                                                                 action: #selector(logout))
+        self.navigationItem.rightBarButtonItem?.tintColor = UIColor.black
+        self.navigationItem.rightBarButtonItem?.isEnabled = true
     }
     
-    @objc func logout() {
-        defaults.set(false, forKey: "userIsLoggedIn")
-        print(defaults.bool(forKey: "userIsLoggedIn"))
+    @objc private func logout() {
+        global.defaults.set(false, forKey: "userIsLoggedIn")
         self.performSegue(withIdentifier: "logout", sender: nil)
     }
 
