@@ -9,42 +9,43 @@
 import UIKit
 
 public class InfoCheck {
+    let global = Global()
     //Checking registration information
-    func check(viewController: UIViewController, emailTextField: UITextField, passwordTextField: UITextField, passwordConfirmationTextField: UITextField) {
+    public func check(viewController: UIViewController, emailTextField: UITextField, passwordTextField: UITextField, passwordConfirmationTextField: UITextField) {
 guard let enteredEmail = emailTextField.text, enteredEmail.isValidEmail() else {
-    global.alertController.alert(title: "Wrong email", message: "Enter correct email!", style: .alert, presentOn: viewController)
+    self.global.alertController.alert(title: "Wrong email", message: "Enter correct email!", style: .alert, presentOn: viewController)
     return
 }
 guard let enteredPassword = passwordTextField.text, enteredPassword.count >= 5 else {
-    global.alertController.alert(title: "Invalid password", message: "Password must have at least 5 characters!", style: .alert, presentOn: viewController)
+    self.global.alertController.alert(title: "Invalid password", message: "Password must have at least 5 characters!", style: .alert, presentOn: viewController)
     return
 }
 guard let passwordConfirmation = passwordConfirmationTextField.text, passwordConfirmation.elementsEqual(enteredPassword) else {
-    global.alertController.alert(title: "Passwords don't match", message: "Enter the same password!", style: .alert, presentOn: viewController)
+    self.global.alertController.alert(title: "Passwords don't match", message: "Enter the same password!", style: .alert, presentOn: viewController)
     return
 }
         viewController.performSegue(withIdentifier: "register", sender: nil)
 
-        global.defaults.set(String(enteredEmail), forKey: "email")
-        global.defaults.set(String(enteredPassword), forKey: "password")
-        global.defaults.set(true, forKey: "userIsRegistered")
-        global.defaults.set(true, forKey: "userIsLoggedIn")
+        self.global.defaults.set(String(enteredEmail), forKey: "email")
+        self.global.defaults.set(String(enteredPassword), forKey: "password")
+        self.global.defaults.set(true, forKey: "userIsRegistered")
+        self.global.defaults.set(true, forKey: "userIsLoggedIn")
     }
     
     //Checking login information
-    func loginCheck(viewController: UIViewController, emailTextField: UITextField, passwordTextField: UITextField) {
-        let savedEmail = global.defaults.string(forKey: "email")
-        let savedPassword = global.defaults.string(forKey: "password")
+    public func loginCheck(viewController: UIViewController, emailTextField: UITextField, passwordTextField: UITextField) {
+        let savedEmail = self.global.defaults.string(forKey: "email")
+        let savedPassword = self.global.defaults.string(forKey: "password")
         
         guard let enteredEmail = emailTextField.text, enteredEmail == savedEmail  else {
-            global.alertController.alert(title: "Wrong email", message: "Enter correct email!", style: .alert, presentOn: viewController)
+            self.global.alertController.alert(title: "Wrong email", message: "Enter correct email!", style: .alert, presentOn: viewController)
             return
         }
         guard let enteredPassword = passwordTextField.text, enteredPassword == savedPassword else {
-            global.alertController.alert(title: "Wrong password", message: "You've entered the wrong password!", style: .alert, presentOn: viewController)
+            self.global.alertController.alert(title: "Wrong password", message: "You've entered the wrong password!", style: .alert, presentOn: viewController)
             return
         }
-        global.defaults.set(true, forKey: "userIsLoggedIn")
+        self.global.defaults.set(true, forKey: "userIsLoggedIn")
         viewController.performSegue(withIdentifier: "login", sender: nil)
     }
     

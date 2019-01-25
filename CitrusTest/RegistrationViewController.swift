@@ -8,8 +8,6 @@
 
 import UIKit
 
-let global = Global()
-
 public class RegistrationViewController: UIViewController {
 
     @IBOutlet weak var emailTextField: UITextField!
@@ -17,10 +15,12 @@ public class RegistrationViewController: UIViewController {
     @IBOutlet weak var passwordConfirmationTextField: UITextField!
     @IBOutlet weak var registerButton: UIButton!
     
+    let global = Global()
     let infoCheck = InfoCheck()
     let alertController = UIAlertController()
     var userIsRegistered = Bool()
     var userIsLoggedIn = Bool()
+    
     
     override public func viewDidLoad() {
         super.viewDidLoad()
@@ -33,9 +33,9 @@ public class RegistrationViewController: UIViewController {
     
     @objc public func register() {
         self.infoCheck.check(viewController: self,
-                        emailTextField: emailTextField,
-                        passwordTextField: passwordTextField,
-                        passwordConfirmationTextField: passwordConfirmationTextField)
+                        emailTextField: self.emailTextField,
+                        passwordTextField: self.passwordTextField,
+                        passwordConfirmationTextField: self.passwordConfirmationTextField)
     }
     
 }

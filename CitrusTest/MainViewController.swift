@@ -13,6 +13,8 @@ public class MainViewController: UIViewController, UITableViewDataSource, UITabl
     
     @IBOutlet weak var tableView: UITableView!
     
+    let global = Global()
+    
     var logoutButton = UIButton()
     var textArray = [All]()
  
@@ -22,8 +24,8 @@ public class MainViewController: UIViewController, UITableViewDataSource, UITabl
         request("https://cat-fact.herokuapp.com/facts").responseData { response in
             let json = response.data
             do {
-                let data = try? JSONDecoder().decode(Data.self, from: json!)
-                self.textArray = (data?.all)!
+                let data = try JSONDecoder().decode(Data.self, from: json!)
+                self.textArray = data.all
             } catch
                 let error {
                 print(error)
@@ -70,7 +72,7 @@ public class MainViewController: UIViewController, UITableViewDataSource, UITabl
     }
     
     @objc private func logout() {
-        global.defaults.set(false, forKey: "userIsLoggedIn")
+        self.global.defaults.set(false, forKey: "userIsLoggedIn")
         self.performSegue(withIdentifier: "logout", sender: nil)
     }
 
